@@ -1,0 +1,15 @@
+<!--
+* Created by nsolorzano on 6/7/2017.
+-->
+<template>
+  <div class="job-list">
+    <ul class="list-group">
+      <li repeat.for="job of jobs" class="list-group-item ${job.id === $parent.selectedId ? 'active' : ''}">
+        <a route-href="route: jobs; params.bind: {id:job.id}" click.delegate="$parent.select(job)">
+          <h4 class="list-group-item-heading">${job.company}</h4>
+          <p class="list-group-item-text">${job.title}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</template>

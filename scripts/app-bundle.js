@@ -106,7 +106,7 @@ define('job-detail',['exports', 'aurelia-framework', 'aurelia-event-aggregator',
     JobDetail.prototype.activate = function activate(params, routeConfig) {
       this.routeConfig = routeConfig;
       var job = this.api.getJobDetails(params.id);
-      this.job = job;
+      this.job = JSON.parse(JSON.stringify(job));
       this.routeConfig.navModel.setTitle(job.company);
       this.originalJob = JSON.parse(JSON.stringify(job));
       this.ea.publish(new _messages.JobViewed(this.job));
@@ -246,165 +246,6 @@ define('messages',["exports"], function (exports) {
     this.job = job;
   };
 });
-define('skillz',["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Skillz = exports.Skillz = function Skillz() {
-    _classCallCheck(this, Skillz);
-  };
-});
-define('timesheet',[], function () {
-  'use strict';
-
-  (function () {
-    'use strict';
-
-    var Timesheet = function Timesheet(container, min, max, data) {
-      this.data = [];
-      this.year = {
-        min: min,
-        max: max
-      };
-
-      this.parse(data || []);
-
-      if (typeof document !== 'undefined') {
-        this.container = typeof container === 'string' ? document.querySelector('#' + container) : container;
-        this.drawSections();
-        this.insertData();
-      }
-    };
-
-    Timesheet.prototype.insertData = function () {
-      var html = [];
-      var widthMonth = this.container.querySelector('.scale section').offsetWidth;
-
-      var n = 0;
-      var m = this.data.length;
-      for (; n < m; n++) {
-        var cur = this.data[n];
-        var bubble = this.createBubble(widthMonth, this.year.min, cur.start, cur.end);
-
-        var line = ['<span style="margin-left: ' + bubble.getStartOffset() + 'px; width: ' + bubble.getWidth() + 'px;" class="bubble bubble-' + (cur.type || 'default') + '" data-duration="' + (cur.end ? Math.round((cur.end - cur.start) / 1000 / 60 / 60 / 24 / 39) : '') + '"></span>', '<span class="date">' + bubble.getDateLabel() + '</span> ', '<span class="label">' + cur.label + '</span>'].join('');
-
-        html.push('<li>' + line + '</li>');
-      }
-
-      this.container.innerHTML += '<ul class="data">' + html.join('') + '</ul>';
-    };
-
-    Timesheet.prototype.drawSections = function () {
-      var html = [];
-
-      for (var c = this.year.min; c <= this.year.max; c++) {
-        html.push('<section>' + c + '</section>');
-      }
-
-      this.container.className = 'timesheet color-scheme-default';
-      this.container.innerHTML = '<div class="scale">' + html.join('') + '</div>';
-    };
-
-    Timesheet.prototype.parseDate = function (date) {
-      if (date.indexOf('/') === -1) {
-        date = new Date(parseInt(date, 10), 0, 1);
-        date.hasMonth = false;
-      } else {
-        date = date.split('/');
-        date = new Date(parseInt(date[1], 10), parseInt(date[0], 10) - 1, 1);
-        date.hasMonth = true;
-      }
-
-      return date;
-    };
-
-    Timesheet.prototype.parse = function (data) {
-      var n = 0;
-      var m = data.length;
-      for (; n < m; n++) {
-        var beg = this.parseDate(data[n][0]);
-        var end = data[n].length === 4 ? this.parseDate(data[n][1]) : null;
-        var lbl = data[n].length === 4 ? data[n][2] : data[n][1];
-        var cat = data[n].length === 4 ? data[n][3] : data[n].length === 3 ? data[n][2] : 'default';
-
-        if (beg.getFullYear() < this.year.min) {
-          this.year.min = beg.getFullYear();
-        }
-
-        if (end && end.getFullYear() > this.year.max) {
-          this.year.max = end.getFullYear();
-        } else if (beg.getFullYear() > this.year.max) {
-          this.year.max = beg.getFullYear();
-        }
-
-        this.data.push({ start: beg, end: end, label: lbl, type: cat });
-      }
-    };
-
-    Timesheet.prototype.createBubble = function (wMonth, min, start, end) {
-      return new Bubble(wMonth, min, start, end);
-    };
-
-    var Bubble = function Bubble(wMonth, min, start, end) {
-      this.min = min;
-      this.start = start;
-      this.end = end;
-      this.widthMonth = wMonth;
-    };
-
-    Bubble.prototype.formatMonth = function (num) {
-      num = parseInt(num, 10);
-      return num >= 10 ? num : '0' + num;
-    };
-
-    Bubble.prototype.getStartOffset = function () {
-      return this.widthMonth / 12 * (12 * (this.start.getFullYear() - this.min) + this.start.getMonth());
-    };
-
-    Bubble.prototype.getFullYears = function () {
-      return (this.end && this.end.getFullYear() || this.start.getFullYear()) - this.start.getFullYear();
-    };
-
-    Bubble.prototype.getMonths = function () {
-      var fullYears = this.getFullYears();
-      var months = 0;
-
-      if (!this.end) {
-        months += !this.start.hasMonth ? 12 : 1;
-      } else {
-        if (!this.end.hasMonth) {
-          months += 12 - (this.start.hasMonth ? this.start.getMonth() : 0);
-          months += 12 * (fullYears - 1 > 0 ? fullYears - 1 : 0);
-        } else {
-          months += this.end.getMonth() + 1;
-          months += 12 - (this.start.hasMonth ? this.start.getMonth() : 0);
-          months += 12 * (fullYears - 1);
-        }
-      }
-
-      return months;
-    };
-
-    Bubble.prototype.getWidth = function () {
-      return this.widthMonth / 12 * this.getMonths();
-    };
-
-    Bubble.prototype.getDateLabel = function () {
-      return [(this.start.hasMonth ? this.formatMonth(this.start.getMonth() + 1) + '/' : '') + this.start.getFullYear(), this.end ? '-' + ((this.end.hasMonth ? this.formatMonth(this.end.getMonth() + 1) + '/' : '') + this.end.getFullYear()) : ''].join('');
-    };
-
-    window.Timesheet = Timesheet;
-  })();
-});
 define('utility',["exports"], function (exports) {
   "use strict";
 
@@ -439,7 +280,7 @@ define('web-api',['exports'], function (exports) {
 
   var jobs = [{
     id: getId(),
-    company: 'Kepware Technologies',
+    company: 'PTC',
     title: 'Software Quality Engineer',
     duties: 'Dutie1',
     startDate: '2016-08',
@@ -470,6 +311,13 @@ define('web-api',['exports'], function (exports) {
     company: 'Job5',
     title: 'Title5',
     duties: 'Dutie5',
+    startDate: '2014-02',
+    endDate: '2014-02'
+  }, {
+    id: getId(),
+    company: 'Job6',
+    title: 'Title6',
+    duties: 'Dutie6',
     startDate: '2014-02',
     endDate: '2014-02'
   }];
@@ -631,9 +479,8 @@ define('resources/elements/loading-indicator',['exports', 'nprogress', 'aurelia-
   })), _class2)) || _class);
 });
 define('text!about.html', ['module'], function(module) { module.exports = "<template><div class=\"panel panel-primary\"><div class=\"panel-heading\"><h3 class=\"panel-title\">${aboutMeHeader}</h3></div><div class=\"panel panel-body\">${aboutMe}</div></div></template>"; });
-define('text!styles.css', ['module'], function(module) { module.exports = "body { padding-top: 70px; }\n\nsection {\n  margin: 0 50px;\n}\n\na:focus {\n  outline: none;\n}\n\n.navbar-nav li.loader {\n    margin: 12px 24px 0 6px;\n}\n\n.job-list {\n  overflow-y: auto;\n  padding: 20px;\n}\n\n.panel {\n  margin: 20px;\n}\n\n.button-bar {\n  right: 0;\n  left: 0;\n  bottom: 0;\n  border-top: 1px solid #ddd;\n  background: white;\n  margin: 20px;\n}\n\n.button-bar > button {\n  float: right;\n  margin: 20px;\n}\n\nli.list-group-item {\n  list-style: none;\n}\n\nli.list-group-item > a {\n  text-decoration: none;\n}\n\nli.list-group-item.active > a {\n  color: white;\n}\n"; });
+define('text!styles.css', ['module'], function(module) { module.exports = "body { padding-top: 70px; }\n\nsection {\n  margin: 0 50px;\n}\n\na:focus {\n  outline: none;\n}\n\ntextarea {\n  resize: none;\n}\n\n.navbar-nav li.loader {\n    margin: 12px 24px 0 6px;\n}\n\n.job-list {\n  overflow-y: auto;\n  padding: 20px;\n}\n\n.panel {\n  margin: 20px;\n}\n\n.button-bar {\n  right: 0;\n  left: 0;\n  bottom: 0;\n  border-top: 1px solid #ddd;\n  background: white;\n  margin: 20px;\n}\n\n.button-bar > button {\n  float: right;\n  margin: 20px;\n}\n\nli.list-group-item {\n  list-style: none;\n}\n\nli.list-group-item > a {\n  text-decoration: none;\n}\n\nli.list-group-item.active > a {\n  color: white;\n}\n"; });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"bootstrap/css/bootstrap.css\"></require><require from=\"./styles.css\"></require><require from=\"./job-list\"></require><nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\"><div class=\"navbar-header\"><a class=\"navbar-brand\" href=\"#\"><span>Nate Solorzano</span></a></div></nav><loading-indicator loading.bind=\"router.isNavigating || api.isRequesting\"></loading-indicator><div class=\"container\"><div class=\"row\"><job-list class=\"col-md-4\"></job-list><router-view class=\"col-md-8\"></router-view></div></div></template>"; });
-define('text!job-detail.html', ['module'], function(module) { module.exports = "<template><div class=\"panel panel-primary\"><div class=\"panel-heading\"><h3 class=\"panel-title\">Work History Details</h3></div><div class=\"panel-body\"><form role=\"form\" class=\"form-horizontal\"><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Company</label><div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Company\" class=\"form-control\" value.bind=\"job.company\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Title</label><div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Title\" class=\"form-control\" value.bind=\"job.title\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Duties</label><div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Duties\" class=\"form-control\" value.bind=\"job.duties\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Start&nbsp;Date</label><div class=\"col-sm-10\"><input type=\"month\" placeholder=\"Start Date\" class=\"form-control\" value.bind=\"job.startDate\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">End&nbsp;Date</label><div class=\"col-sm-10\"><input type=\"month\" placeholder=\"End Date\" class=\"form-control\" value.bind=\"job.endDate\"></div></div></form></div></div><div class=\"button-bar\"><button class=\"btn btn-success\" click.delegate=\"save()\" disabled.bind=\"!canSave\">Save</button></div></template>"; });
+define('text!job-detail.html', ['module'], function(module) { module.exports = "<template><div class=\"panel panel-primary\"><div class=\"panel-heading\"><h3 class=\"panel-title\">Work History Details</h3></div><div class=\"panel-body\"><form role=\"form\" class=\"form-horizontal\"><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Company</label><div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Company\" class=\"form-control\" value.bind=\"job.company\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Title</label><div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Title\" class=\"form-control\" value.bind=\"job.title\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Duties</label><div class=\"col-sm-10\"><textarea rows=\"4\" placeholder=\"Duties\" class=\"form-control\" value.bind=\"job.duties\"></textarea></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">Start&nbsp;Date</label><div class=\"col-sm-10\"><input type=\"month\" placeholder=\"Start Date\" class=\"form-control\" value.bind=\"job.startDate\"></div></div><div class=\"form-group\"><label class=\"col-sm-2 control-label\">End&nbsp;Date</label><div class=\"col-sm-10\"><input type=\"month\" placeholder=\"End Date\" class=\"form-control\" value.bind=\"job.endDate\"></div></div></form></div></div><div class=\"button-bar\"><button class=\"btn btn-success\" click.delegate=\"save()\" disabled.bind=\"!canSave\">Save</button></div></template>"; });
 define('text!job-list.html', ['module'], function(module) { module.exports = "<template><div class=\"job-list\"><ul class=\"list-group\"><li repeat.for=\"job of jobs\" class=\"list-group-item ${job.id === $parent.selectedId ? 'active' : ''}\"><a route-href=\"route: jobs; params.bind: {id:job.id}\" click.delegate=\"$parent.select(job)\"><h4 class=\"list-group-item-heading\">${job.company}</h4><p class=\"list-group-item-text\">${job.title}</p></a></li></ul></div></template>"; });
-define('text!skillz.html', ['module'], function(module) { module.exports = "<template><p>Skillz Page - Place Holder</p></template>"; });
 //# sourceMappingURL=app-bundle.js.map

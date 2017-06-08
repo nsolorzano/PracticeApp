@@ -17,7 +17,7 @@ export class JobDetail {
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
     let job = this.api.getJobDetails(params.id);
-    this.job = job;
+    this.job = JSON.parse(JSON.stringify(job));
     this.routeConfig.navModel.setTitle(job.company);
     this.originalJob = JSON.parse(JSON.stringify(job));
     this.ea.publish(new JobViewed(this.job));

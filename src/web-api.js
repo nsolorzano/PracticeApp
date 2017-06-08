@@ -10,7 +10,7 @@ function getId() {
 let jobs = [
   {
     id: getId(),
-    company: 'Kepware Technologies',
+    company: 'PTC',
     title: 'Software Quality Engineer',
     duties: 'Dutie1',
     startDate: '2016-08',
@@ -45,6 +45,14 @@ let jobs = [
     company: 'Job5',
     title: 'Title5',
     duties: 'Dutie5',
+    startDate: '2014-02',
+    endDate: '2014-02'
+  },
+  {
+    id: getId(),
+    company: 'Job6',
+    title: 'Title6',
+    duties: 'Dutie6',
     startDate: '2014-02',
     endDate: '2014-02'
   }

@@ -10,6 +10,8 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.1",
     "aurelia-bootstrapper": "^2.1.0",
+    "aurelia-validation": "^1.0.0",
+    "autosize": "^3.0.21",
     "bluebird": "^3.4.1",
     "bootstrap": "^3.3.7",
     "jquery": "^2.2.4",

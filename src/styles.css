@@ -8,6 +8,10 @@ a:focus {
   outline: none;
 }
 
+textarea {
+  resize: none;
+}
+
 .navbar-nav li.loader {
     margin: 12px 24px 0 6px;
 }

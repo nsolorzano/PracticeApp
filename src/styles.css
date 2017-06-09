@@ -8,6 +8,17 @@ a:focus {
   outline: none;
 }
 
+#aboutMe {
+  text-align: justify;
+}
+
+#aboutMeImg {
+  height: 220px;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
 textarea {
   resize: none;
 }

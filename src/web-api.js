@@ -2,7 +2,6 @@
  * Created by nsolorzano on 6/7/2017.
  */
 let id = 0;
-
 function getId() {
   return ++id;
 }
@@ -12,49 +11,51 @@ let jobs = [
     id: getId(),
     company: 'PTC',
     title: 'Software Quality Engineer',
-    duties: 'Dutie1',
+    duties: 'Test software and other stuff...',
     startDate: '2016-08',
-    endDate: '2080-08'
+    endDate: ''
   },
   {
     id: getId(),
     company: 'Kepware Technologies',
     title: 'Quality Assurance Engineer',
-    duties: 'Software test plan management and development. Manual and automated Test Case Management using Team Foundation Server (TFS) and Microsoft Test Manager (MTM). Quality control through detailed and accurate software testing, with measured results and engineering feedback processes.',
+    duties: 'Software test plan management and development. ' +
+            'Manual and automated Test Case Management using Team Foundation Server (TFS) and Microsoft Test Manager (MTM). ' +
+            'Quality control through detailed and accurate software testing, with measured results and engineering feedback processes.',
     startDate: '2014-08',
     endDate: '2016-08'
   },
   {
     id: getId(),
-    company: 'Job3',
-    title: 'Title3',
-    duties: 'Dutie3',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'Rufus Deering Lumber Company',
+    title: 'IT Management Intern',
+    duties: 'IT Management and stuff...',
+    startDate: '2014-01',
+    endDate: '2014-08'
   },
   {
     id: getId(),
-    company: 'Job4',
-    title: 'Title4',
-    duties: 'Dutie4',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'Browne Trading Company',
+    title: 'Fresh Seafood Product Manager',
+    duties: 'Keep fish fresh and stuff...',
+    startDate: '2009-08',
+    endDate: '2011-11'
   },
   {
     id: getId(),
-    company: 'Job5',
-    title: 'Title5',
-    duties: 'Dutie5',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'Lone Star Construction Company',
+    title: 'Carpenter',
+    duties: 'Build Everything...',
+    startDate: '1996-01',
+    endDate: '2008-04'
   },
   {
     id: getId(),
-    company: 'Job6',
-    title: 'Title6',
-    duties: 'Dutie6',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'USAF @ Little Rock AFB',
+    title: 'Aircraft Fuels System Specialist',
+    duties: 'Fix aeroplanes and stuff...',
+    startDate: '2001-11',
+    endDate: '2005-04'
   }
 ];
 

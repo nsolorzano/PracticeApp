@@ -15,7 +15,7 @@ define('about',['exports'], function (exports) {
     _classCallCheck(this, About);
 
     this.aboutMeHeader = 'About Me';
-    this.aboutMe = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,';
+    this.aboutMe = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ' + 'Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus' + ' mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa' + ' quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo,' + ' rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.' + ' Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend' + ' tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem' + ' ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius' + ' laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur' + ' ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget' + ' condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam' + ' nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt' + ' tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci' + ' eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales' + ' sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.';
   };
 });
 define('app',['exports', 'aurelia-framework', './web-api'], function (exports, _aureliaFramework, _webApi) {
@@ -273,7 +273,6 @@ define('web-api',['exports'], function (exports) {
   }
 
   var id = 0;
-
   function getId() {
     return ++id;
   }
@@ -282,44 +281,44 @@ define('web-api',['exports'], function (exports) {
     id: getId(),
     company: 'PTC',
     title: 'Software Quality Engineer',
-    duties: 'Dutie1',
+    duties: 'Test software and other stuff...',
     startDate: '2016-08',
-    endDate: '2080-08'
+    endDate: ''
   }, {
     id: getId(),
     company: 'Kepware Technologies',
     title: 'Quality Assurance Engineer',
-    duties: 'Software test plan management and development. Manual and automated Test Case Management using Team Foundation Server (TFS) and Microsoft Test Manager (MTM). Quality control through detailed and accurate software testing, with measured results and engineering feedback processes.',
+    duties: 'Software test plan management and development. ' + 'Manual and automated Test Case Management using Team Foundation Server (TFS) and Microsoft Test Manager (MTM). ' + 'Quality control through detailed and accurate software testing, with measured results and engineering feedback processes.',
     startDate: '2014-08',
     endDate: '2016-08'
   }, {
     id: getId(),
-    company: 'Job3',
-    title: 'Title3',
-    duties: 'Dutie3',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'Rufus Deering Lumber Company',
+    title: 'IT Management Intern',
+    duties: 'IT Management and stuff...',
+    startDate: '2014-01',
+    endDate: '2014-08'
   }, {
     id: getId(),
-    company: 'Job4',
-    title: 'Title4',
-    duties: 'Dutie4',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'Browne Trading Company',
+    title: 'Fresh Seafood Product Manager',
+    duties: 'Keep fish fresh and stuff...',
+    startDate: '2009-08',
+    endDate: '2011-11'
   }, {
     id: getId(),
-    company: 'Job5',
-    title: 'Title5',
-    duties: 'Dutie5',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'Lone Star Construction Company',
+    title: 'Carpenter',
+    duties: 'Build Everything...',
+    startDate: '1996-01',
+    endDate: '2008-04'
   }, {
     id: getId(),
-    company: 'Job6',
-    title: 'Title6',
-    duties: 'Dutie6',
-    startDate: '2014-02',
-    endDate: '2014-02'
+    company: 'USAF @ Little Rock AFB',
+    title: 'Aircraft Fuels System Specialist',
+    duties: 'Fix aeroplanes and stuff...',
+    startDate: '2001-11',
+    endDate: '2005-04'
   }];
 
   var WebAPI = exports.WebAPI = function () {

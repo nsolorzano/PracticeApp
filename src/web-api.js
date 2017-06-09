@@ -60,7 +60,6 @@ let jobs = [
 ];
 
 export class WebAPI {
-  isRequesting = false;
 
   getJobList() {
     return jobs.map(x =>  {

@@ -24,7 +24,7 @@ export class JobDetail {
   }
 
   get canSave() {
-    return this.job.company && this.job.title && !this.api.isRequesting;
+    return this.job.company && this.job.title;
   }
 
   save() {
